@@ -100,7 +100,7 @@ Comme vous pouvez le constater, la couleur noire correspond au tuple `(0, 0, 0)`
 Et voici comment dessiner un carré blanc :
 
 ```py
-pygame.draw.rect(screen, (255, 255, 255), 0, 0, 100, 100)
+pygame.draw.rect(screen, (255, 255, 255), (0, 0, 100, 100))
 pygame.display.flip()
 ```
 
