@@ -83,7 +83,7 @@ while not done:
 pygame.quit()
 ```
 
-La fenêtre doit maintenant rester affichée, et vous devirez voir le message `Update !` à chaque seconde. Vous pouvez diminuer le `tick` pour augmenter la fréquence de mise à jour.
+La fenêtre doit maintenant rester affichée, et vous devriez voir le message `Update !` à chaque seconde. Vous pouvez diminuer le `tick` pour augmenter la fréquence de mise à jour.
 
 Prenez le temps de comprendre l'ensemble du code. Vous pouvez le ré-utiliser pour tous les programmes et jeux de la sorte.
 
@@ -154,14 +154,7 @@ Par exemple, l'état présenté à la partie suivante évolue vers la forme suiv
 
 Puis il revient à l'état initial (c'est un oscillateur).
 
-Implémentez une fonction retournant un nouvel état en fonction d'un état donné.
-
-**Attention** : au début de votre fonction, vous devrez faire une *copie profonde* de votre état actuel avant de le modifier. Sinon, vous modifierez l'état alors même que vous êtes en train de l'analyser, et l'algorithme ne fonctionnera pas. Voici comment faire une copie profonde :
-
-```py
-import copy
-new_array = copy.deepcopy(array)
-```
+Implémentez une fonction `get_next_state` retournant un nouvel état en fonction d'un état donné.
 
 Le fichier `test.py` contient un test qui vous permettra de savoir si l'algorithme est correctement implémenté.
 
