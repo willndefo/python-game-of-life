@@ -219,7 +219,3 @@ Voici le plus petit "canon à planeur" connu. Toutes les itérations, les règle
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 ```
-
-## Bonus : la fourmi de Lantgon
-
-Vous reprendrez bien un petit [automate cellulaire](https://www.youtube.com/watch?v=qZRYGxF6D3w) ?
