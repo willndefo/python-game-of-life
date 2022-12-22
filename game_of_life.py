@@ -1,41 +1,46 @@
 import pygame
 from constants import *
+import numpy as np
 
-pygame.init()
+class Game_Of_Life:
+    def __init__(self):
+        self.width = SCREEN_WIDTH
+        self.height = SCREEN_HEIGHT
+        self.tile_size = TILE_SIZE
 
-screen: pygame.surface.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        # Initialize the init grid
+        self.state = INIT_STATE
 
-clock = pygame.time.Clock()
+        # Initialize pygame
+        pygame.init()
+
+        self.screen: pygame.surface.Surface = pygame.display.set_mode((self.width, self.height))
+
+        self.clock = pygame.time.Clock()
+
+        def play():
+            done: bool = False
+
+            # While the game is not over
+            while not done:
+
+                # state = get_next_state(state)
+                #
+                # for row in range(1, len(state) - 1):
+                #     for col in range(1, len(state) - 1):
+                #         if state[row][col] == 1:
+                #             draw_at_case(row, col, TILE_ALIVE_COLOR)
+                #         else:
+                #             draw_at_case(row, col, TILE_DEAD_COLOR)
 
 
-def generate_map(_map: list):
-    offset_y: int = 0
-    for row in _map:
-        offset_x: int = 0
-        for col in row:
-            if col == 1:
-                pygame.draw.rect(screen, TILE_COLOR, (offset_x, offset_y, TILE_SIZE, TILE_SIZE))
-            offset_x += TILE_SIZE
+                # Listen for all events
+                for event in pygame.event.get():
 
-        offset_y += TILE_SIZE
+                    # Quit the infinite loop when the user presses the close button
+                    if event.type == pygame.QUIT:
+                        done = True
 
-    pygame.display.flip()
+                self.clock.tick(1)
 
-
-done: bool = False
-
-# While the game is not over
-while not done:
-
-    generate_map(INIT_STATE)
-
-    # Listen for all events
-    for event in pygame.event.get():
-
-        # Quit the infinite loop when the user presses the close button
-        if event.type == pygame.QUIT:
-            done = True
-
-    clock.tick(1)
-
-pygame.quit()
+            pygame.quit()
