@@ -11,6 +11,11 @@ class Tile:
         self.state: int = state
 
     def draw(self, screen: pySurface) -> None:
+        """
+            Draw a tile
+            :param screen: window where the game is displayed
+            :return: nothing
+        """
         color: tuple[int, int, int] = TILE_ALIVE_COLOR if self.state == 1 else TILE_DEAD_COLOR
         draw_rect(screen, color, (self.x * self.size, self.y * self.size, self.size, self.size))
 

@@ -14,6 +14,12 @@ class Button:
         self.color = (0, 0, 0)
 
     def draw(self, screen) -> None:
+        """
+            Draw the button
+            :param screen: window where the game is displayed
+            :return: nothing
+        """
+
         # Draw the button rectangle
         pygame.draw.rect(screen, self.color, self.rect)
 
@@ -21,7 +27,13 @@ class Button:
         text_rect = self.text.get_rect(center=self.rect.center)
         screen.blit(self.text, text_rect)
 
-    def handle_click(self, event):
+    def handle_click(self, event) -> None:
+        """
+            Responsible to trigger an action when the user click on the button
+            :param event: event catch from the pygame area
+            :return: nothing
+        """
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 print("Hello World")
