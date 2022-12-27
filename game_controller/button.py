@@ -1,17 +1,24 @@
 import pygame
+from utils.type import Color
+from utils.constants import BLACK, WHITE
 
 
 class Button:
-    def __init__(self, x: int, y: int, w: int, h, text: str, font_size: int):
+    def __init__(self, label: str = "Button", font_size: int = 24):
         # Set the button dimensions and position
-        self.rect = pygame.Rect(x, y, w, h)
+        self.rect = pygame.Rect(0, 0, 0, 0)
 
         # Initialize the font and render the text
         self.font = pygame.font.Font(None, font_size)
-        self.text = self.font.render(text, True, (255, 255, 255))
+        self.text_color: Color = WHITE
+        self.label: str = label
+        self.text = self.font.render(label, True, self.text_color)
 
         # Initialize the color
-        self.color = (0, 0, 0)
+        self.bg_color: Color = BLACK
+
+        # Initialize the action
+        self.is_clicked: bool = False
 
     def draw(self, screen) -> None:
         """
@@ -21,19 +28,32 @@ class Button:
         """
 
         # Draw the button rectangle
-        pygame.draw.rect(screen, self.color, self.rect)
+        pygame.draw.rect(screen, self.bg_color, self.rect)
 
         # Draw text label
+        self.text = self.font.render(self.label, True, self.text_color)
         text_rect = self.text.get_rect(center=self.rect.center)
         screen.blit(self.text, text_rect)
 
-    def handle_click(self, event) -> None:
+    def set_button_rect(self, x: int, y: int, w: int, h: int):
+        self.rect = pygame.Rect(x, y, w, h)
+
+    def handle_mouse_event(self) -> None:
         """
             Responsible to trigger an action when the user click on the button
-            :param event: event catch from the pygame area
             :return: nothing
         """
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                print("Hello World")
+        mouse_pos: tuple[int, int] = pygame.mouse.get_pos()
+
+        # Check mouseover and clicked conditions
+        if self.rect.collidepoint(mouse_pos):
+            self.bg_color, self.text_color = WHITE, BLACK  # Mouseover
+
+            if pygame.mouse.get_pressed()[0] == 1 and not self.is_clicked:  # Mouseclick
+                self.is_clicked = True
+        else:  # Exit Mouseover
+            self.bg_color, self.text_color = BLACK, WHITE
+
+        if pygame.mouse.get_pressed()[0] == 0:  # Exit MouseClick
+            self.is_clicked = False

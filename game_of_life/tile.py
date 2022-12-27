@@ -1,4 +1,4 @@
-from game_of_life.constants import TILE_ALIVE_COLOR, TILE_DEAD_COLOR
+from utils.constants import TILE_ALIVE_COLOR, TILE_DEAD_COLOR
 from pygame.surface import Surface as pySurface
 from pygame.draw import rect as draw_rect
 

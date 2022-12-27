@@ -1,3 +1,5 @@
+from utils.type import Color
+
 INIT_STATE: list[list[int]] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -56,9 +58,13 @@ MAP_WIDTH: int = len(INIT_STATE[0])
 
 # TILE ATTRIBUTES
 TILE_SIZE: int = 10
-TILE_ALIVE_COLOR: tuple[int, int, int] = (0, 0, 0)
-TILE_DEAD_COLOR: tuple[int, int, int] = (255, 255, 255)
+TILE_ALIVE_COLOR = Color(0, 0, 0)
+TILE_DEAD_COLOR = Color(255, 255, 255)
 
 # SCREEN ATTRIBUTES
 SCREEN_WIDTH: int = TILE_SIZE * MAP_WIDTH
 SCREEN_HEIGHT: int = TILE_SIZE * MAP_HEIGHT
+
+# COLORS
+WHITE = Color(255, 255, 255)
+BLACK = Color(0, 0, 0)

@@ -1,5 +1,5 @@
 from game_of_life.tile import Tile
-from game_of_life.constants import INIT_STATE
+from utils.constants import INIT_STATE
 from pygame.surface import Surface as pySurface
 
 
