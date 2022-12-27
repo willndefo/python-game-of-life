@@ -1,13 +1,14 @@
 import pygame
 from utils.enums import Stage
-from utils.constants import WHITE
 from game_of_life.menu import Menu
 from game_of_life.grid import Grid
 from game_controller.button import Button
+from utils.constants import WHITE, MIN_SCREEN_HEIGHT, MIN_SCREEN_WIDTH
 
 
 class GameOfLife:
     def __init__(self, width: int, height: int, tile_size: int):
+        self.tile_size: int = tile_size
         self.grid = Grid(width, height, tile_size)
 
         # Initialize pygame
@@ -52,7 +53,17 @@ class GameOfLife:
 
                 # Resize the screen game if the user resize the window
                 if event.type == pygame.VIDEORESIZE:
-                    self.screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+                    # Force minimum dimension
+                    screen_width = max(MIN_SCREEN_WIDTH, event.w)
+                    screen_height = max(MIN_SCREEN_HEIGHT, event.h)
+
+                    # Force resize by "tile size": decades by default
+                    if screen_width % self.tile_size:
+                        screen_width -= (screen_width % self.tile_size) - self.tile_size
+                    if screen_height % self.tile_size:
+                        screen_height -= (screen_height % self.tile_size) - self.tile_size
+
+                    self.screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
                     self.screen.fill(WHITE)
 
                 # Quit the infinite loop when the user presses the close button

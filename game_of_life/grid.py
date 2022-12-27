@@ -1,5 +1,7 @@
+from random import randint
+from utils.type import Color
 from game_of_life.tile import Tile
-from utils.constants import INIT_STATE
+from pygame.draw import line as draw_line
 from pygame.surface import Surface as pySurface
 
 
@@ -9,7 +11,7 @@ class Grid:
         self.height: int = height
         self.tile_size: int = tile_size
 
-        self.state = [[Tile(x, y, tile_size, INIT_STATE[y][x]) for x in range(width)] for y in range(height)]
+        self.state = [[Tile(x, y, tile_size, randint(0, 1)) for x in range(width)] for y in range(height)]
 
     def draw_state(self, screen: pySurface):
         """
@@ -19,6 +21,23 @@ class Grid:
         for row in self.state:
             for tile in row:
                 tile.draw(screen)
+
+        # Draw the grid
+        rows: int = screen.get_height() // self.tile_size
+        cols: int = screen.get_width() // self.tile_size
+        grey: Color = Color(100, 100, 100)
+
+        for row in range(rows + 1):
+            # Calculate the y coordinate of each line
+            y = row * self.tile_size
+
+            # Draw horizontal line
+            draw_line(screen, grey, (0, y), (screen.get_width(), y))
+
+            for col in range(cols + 1):
+                # Same logic for x and vertical lines
+                x = col * self.tile_size
+                draw_line(screen, grey, (x, 0), (x, screen.get_height()))
 
     def update_state(self) -> None:
         """
