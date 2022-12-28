@@ -28,6 +28,9 @@ class GameOfLife:
         # Initialize stage
         self.stage = Stage.INTRO
 
+        # Initialize custom grid
+        self.cs_grid = Grid(width, height, tile_size, True)
+
     def play(self) -> None:
         """
             Launch the game
@@ -53,27 +56,33 @@ class GameOfLife:
 
                 # Resize the screen game if the user resize the window
                 if event.type == pygame.VIDEORESIZE:
-                    # Force minimum dimension
-                    screen_width = max(MIN_SCREEN_WIDTH, event.w)
-                    screen_height = max(MIN_SCREEN_HEIGHT, event.h)
+                    self.__resize_game(event)
 
-                    # Force resize by "tile size": decades by default
-                    if screen_width % self.tile_size:
-                        screen_width -= (screen_width % self.tile_size) - self.tile_size
-                    if screen_height % self.tile_size:
-                        screen_height -= (screen_height % self.tile_size) - self.tile_size
-
-                    self.screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
-                    self.screen.fill(WHITE)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    self.stage = Stage.INTRO
 
                 # Quit the infinite loop when the user presses the close button
                 if event.type == pygame.QUIT:
                     done = True
 
             pygame.display.flip()
-            self.clock.tick(10)
+            self.clock.tick(60)
 
         pygame.quit()
+
+    def __resize_game(self, event: pygame.event.Event) -> None:
+        # Force minimum dimension
+        screen_width = max(MIN_SCREEN_WIDTH, event.w)
+        screen_height = max(MIN_SCREEN_HEIGHT, event.h)
+
+        # Force resize by "tile size": decades by default
+        if screen_width % self.tile_size:
+            screen_width -= (screen_width % self.tile_size) - self.tile_size
+        if screen_height % self.tile_size:
+            screen_height -= (screen_height % self.tile_size) - self.tile_size
+
+        self.screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
+        self.screen.fill(WHITE)
 
     def __intro_stage(self) -> None:
         w = 200
@@ -95,7 +104,7 @@ class GameOfLife:
         self.grid.draw_state(self.screen)
 
     def __custom_stage(self) -> None:
-        print("CUSTOM STAGE")
+        self.cs_grid.draw_state(self.screen)
 
     def __settings_stage(self) -> None:
         print("SETTINGS STAGE")

@@ -1,14 +1,15 @@
-from utils.constants import TILE_ALIVE_COLOR, TILE_DEAD_COLOR
-from pygame.surface import Surface as pySurface
+import pygame
+from utils.type import Color
 from pygame.draw import rect as draw_rect
+from pygame.surface import Surface as pySurface
+from utils.constants import TILE_ALIVE_COLOR, TILE_DEAD_COLOR
 
 
 class Tile:
     def __init__(self, x: int, y: int, size: int, state: int):
-        self.x: int = x
-        self.y: int = y
-        self.size: int = size
         self.state: int = state
+        self.rect = pygame.Rect(x * size, y * size, size, size)
+        self.click_flag: int = 0
 
     def draw(self, screen: pySurface) -> None:
         """
@@ -16,8 +17,20 @@ class Tile:
             :param screen: window where the game is displayed
             :return: nothing
         """
-        color: tuple[int, int, int] = TILE_ALIVE_COLOR if self.state == 1 else TILE_DEAD_COLOR
-        draw_rect(screen, color, (self.x * self.size, self.y * self.size, self.size, self.size))
 
-    def set_state(self, state):
+        self.handle_click()
+        color: Color = TILE_ALIVE_COLOR if self.state == 1 else TILE_DEAD_COLOR
+        draw_rect(screen, color, self.rect)
+
+    def handle_click(self) -> None:
+        mouse_pos = pygame.mouse.get_pos()
+
+        if self.rect.collidepoint(mouse_pos):
+            if pygame.mouse.get_pressed()[0] and self.click_flag < 1:
+                self.set_state(int(not self.state))
+                self.click_flag += 1
+        else:
+            self.click_flag = 0
+
+    def set_state(self, state: int):
         self.state = state

@@ -6,12 +6,17 @@ from pygame.surface import Surface as pySurface
 
 
 class Grid:
-    def __init__(self, width: int, height: int, tile_size: int):
-        self.width: int = width
-        self.height: int = height
+    def __init__(self, width: int, height: int, tile_size: int, is_custom: bool = False):
+        self.cols: int = width
+        self.rows: int = height
         self.tile_size: int = tile_size
 
-        self.state = [[Tile(x, y, tile_size, randint(0, 1)) for x in range(width)] for y in range(height)]
+        self.blank_state = [[Tile(x, y, self.tile_size, 0) for x in range(self.cols)] for y in range(self.rows)]
+
+        if is_custom:
+            self.state = self.blank_state
+        else:
+            self.state = [[Tile(x, y, tile_size, randint(0, 1)) for x in range(width)] for y in range(height)]
 
     def draw_state(self, screen: pySurface):
         """
@@ -23,21 +28,20 @@ class Grid:
                 tile.draw(screen)
 
         # Draw the grid
-        rows: int = screen.get_height() // self.tile_size
-        cols: int = screen.get_width() // self.tile_size
+        height: int = self.rows * self.tile_size
+        width: int = self.cols * self.tile_size
         grey: Color = Color(100, 100, 100)
 
-        for row in range(rows + 1):
+        for row in range(self.rows + 1):
             # Calculate the y coordinate of each line
             y = row * self.tile_size
 
             # Draw horizontal line
-            draw_line(screen, grey, (0, y), (screen.get_width(), y))
+            draw_line(screen, grey, (0, y), (width, y))
 
-            for col in range(cols + 1):
-                # Same logic for x and vertical lines
+            for col in range(self.cols + 1):  # Same logic for x and vertical lines
                 x = col * self.tile_size
-                draw_line(screen, grey, (x, 0), (x, screen.get_height()))
+                draw_line(screen, grey, (x, 0), (x, height))
 
     def update_state(self) -> None:
         """
@@ -46,10 +50,10 @@ class Grid:
         """
 
         # At init next_state is a zero matrix
-        next_state = [[Tile(x, y, self.tile_size, 0) for x in range(self.width)] for y in range(self.height)]
+        next_state = self.blank_state
 
-        for x in range(self.width):
-            for y in range(self.height):
+        for x in range(self.cols):
+            for y in range(self.rows):
 
                 # Check rules
                 if 2 <= self.get_neighbours_number(x, y) <= 3:  # 2 <= n < 3 and n == 3 stay alive
@@ -73,7 +77,7 @@ class Grid:
             for dy in range(-1, 2):
                 if dx == dy == 0:
                     continue
-                if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                if 0 <= x + dx < self.cols and 0 <= y + dy < self.rows:
                     number += 1 if self.state[y + dy][x + dx].state == 1 else 0
 
         return number
