@@ -2,6 +2,7 @@ import pygame
 from utils.enums import Stage
 from game_of_life.menu import Menu
 from game_of_life.grid import Grid
+from utils.parameter import Parameter
 from game_controller.button import Button
 from utils.constants import WHITE, MIN_SCREEN_HEIGHT, MIN_SCREEN_WIDTH, MAP_WIDTH, MAP_HEIGHT, TILE_SIZE
 
@@ -10,6 +11,8 @@ class GameOfLife:
     def __init__(self, width: int = MAP_WIDTH, height: int = MAP_HEIGHT, tile_size: int = TILE_SIZE):
         self.tile_size: int = tile_size
         self.grid = Grid(width, height, tile_size)
+
+        Parameter.load_from_file("settings.txt")
 
         # Initialize pygame
         pygame.init()
@@ -63,10 +66,11 @@ class GameOfLife:
 
                 # Quit the infinite loop when the user presses the close button
                 if event.type == pygame.QUIT:
+                    Parameter.save_to_file("settings.txt")
                     done = True
 
             pygame.display.flip()
-            self.clock.tick(10)
+            self.clock.tick(60)
 
         pygame.quit()
 

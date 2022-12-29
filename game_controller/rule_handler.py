@@ -8,7 +8,7 @@ class RuleHandler:
 
         for rule in Parameter.rules.split(","):
             # Split the rule into a tuple (state, result)
-            state, result = rule.split(":")
+            state, result = rule.split("|")
             self.rules.append((int(state), result))
 
     def apply_rules(self, state: int, neighbours_number: int) -> int:
