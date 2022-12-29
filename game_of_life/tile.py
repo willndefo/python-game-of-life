@@ -18,7 +18,7 @@ class Tile:
             :return: nothing
         """
 
-        self.handle_click()
+        #self.handle_click()
         color: Color = TILE_ALIVE_COLOR if self.state == 1 else TILE_DEAD_COLOR
         draw_rect(screen, color, self.rect)
 

@@ -3,11 +3,11 @@ from utils.enums import Stage
 from game_of_life.menu import Menu
 from game_of_life.grid import Grid
 from game_controller.button import Button
-from utils.constants import WHITE, MIN_SCREEN_HEIGHT, MIN_SCREEN_WIDTH
+from utils.constants import WHITE, MIN_SCREEN_HEIGHT, MIN_SCREEN_WIDTH, MAP_WIDTH, MAP_HEIGHT, TILE_SIZE
 
 
 class GameOfLife:
-    def __init__(self, width: int, height: int, tile_size: int):
+    def __init__(self, width: int = MAP_WIDTH, height: int = MAP_HEIGHT, tile_size: int = TILE_SIZE):
         self.tile_size: int = tile_size
         self.grid = Grid(width, height, tile_size)
 

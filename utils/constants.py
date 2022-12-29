@@ -67,4 +67,5 @@ MIN_SCREEN_HEIGHT: int = 490
 
 # COLORS
 WHITE = Color(255, 255, 255)
+GREY = Color(100, 100, 100)
 BLACK = Color(0, 0, 0)

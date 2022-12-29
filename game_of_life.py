@@ -5,8 +5,7 @@
 """
 
 from game_of_life.game import GameOfLife
-from utils.constants import MAP_WIDTH, MAP_HEIGHT, TILE_SIZE
 
 if __name__ == "__main__":
-    gol = GameOfLife(MAP_WIDTH, MAP_HEIGHT, TILE_SIZE)
+    gol = GameOfLife()
     gol.play()

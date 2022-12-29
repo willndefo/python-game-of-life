@@ -3,6 +3,7 @@ from game_of_life.tile import Tile
 from utils.constants import INIT_STATE
 from pygame.draw import line as draw_line
 from pygame.surface import Surface as pySurface
+from game_controller.rule_handler import RuleHandler
 
 
 class Grid:
@@ -10,6 +11,8 @@ class Grid:
         self.cols: int = cols
         self.rows: int = rows
         self.tile_size: int = tile_size
+
+        self.rule_handler = RuleHandler()
 
         self.state = [[Tile(x, y, self.tile_size, INIT_STATE[y][x]) for x in range(cols)] for y in range(rows)]
 
@@ -50,15 +53,13 @@ class Grid:
         for x in range(self.cols):
             for y in range(self.rows):
 
-                # Check rules
-                if self.state[y][x].state == 1:
-                    if 2 <= self.get_neighbours_number(x, y) <= 3:
-                        next_state[y][x].set_state(1)
-                    else:
-                        next_state[y][x].set_state(0)
-                else:
-                    if self.get_neighbours_number(x, y) == 3:
-                        next_state[y][x].set_state(1)
+                # Apply rules
+                s = self.state[y][x].state
+                n = self.get_neighbours_number(x, y)
+                nxt = self.rule_handler.apply_rules(s, n)
+
+                # Set next state
+                next_state[y][x].set_state(nxt)
 
         # Pass the current state to the next
         self.state = next_state
