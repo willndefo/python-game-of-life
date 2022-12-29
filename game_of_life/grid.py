@@ -1,22 +1,17 @@
-from random import randint
 from utils.type import Color
 from game_of_life.tile import Tile
+from utils.constants import INIT_STATE
 from pygame.draw import line as draw_line
 from pygame.surface import Surface as pySurface
 
 
 class Grid:
-    def __init__(self, width: int, height: int, tile_size: int, is_custom: bool = False):
-        self.cols: int = width
-        self.rows: int = height
+    def __init__(self, cols: int, rows: int, tile_size: int):
+        self.cols: int = cols
+        self.rows: int = rows
         self.tile_size: int = tile_size
 
-        self.blank_state = [[Tile(x, y, self.tile_size, 0) for x in range(self.cols)] for y in range(self.rows)]
-
-        if is_custom:
-            self.state = self.blank_state
-        else:
-            self.state = [[Tile(x, y, tile_size, randint(0, 1)) for x in range(width)] for y in range(height)]
+        self.state = [[Tile(x, y, self.tile_size, INIT_STATE[y][x]) for x in range(cols)] for y in range(rows)]
 
     def draw_state(self, screen: pySurface):
         """
@@ -50,16 +45,20 @@ class Grid:
         """
 
         # At init next_state is a zero matrix
-        next_state = self.blank_state
+        next_state = [[Tile(x, y, self.tile_size, 0) for x in range(self.cols)] for y in range(self.rows)]
 
         for x in range(self.cols):
             for y in range(self.rows):
 
                 # Check rules
-                if 2 <= self.get_neighbours_number(x, y) <= 3:  # 2 <= n < 3 and n == 3 stay alive
-                    next_state[y][x].set_state(1)
-                elif 3 < self.get_neighbours_number(x, y):
-                    next_state[y][x].set_state(0)
+                if self.state[y][x].state == 1:
+                    if 2 <= self.get_neighbours_number(x, y) <= 3:
+                        next_state[y][x].set_state(1)
+                    else:
+                        next_state[y][x].set_state(0)
+                else:
+                    if self.get_neighbours_number(x, y) == 3:
+                        next_state[y][x].set_state(1)
 
         # Pass the current state to the next
         self.state = next_state

@@ -29,7 +29,7 @@ class GameOfLife:
         self.stage = Stage.INTRO
 
         # Initialize custom grid
-        self.cs_grid = Grid(width, height, tile_size, True)
+        self.cs_grid = Grid(width, height, tile_size)
 
     def play(self) -> None:
         """
@@ -66,7 +66,7 @@ class GameOfLife:
                     done = True
 
             pygame.display.flip()
-            self.clock.tick(60)
+            self.clock.tick(10)
 
         pygame.quit()
 
@@ -100,8 +100,8 @@ class GameOfLife:
         self.stage = stage
 
     def __random_stage(self) -> None:
-        self.grid.update_state()
         self.grid.draw_state(self.screen)
+        self.grid.update_state()
 
     def __custom_stage(self) -> None:
         self.cs_grid.draw_state(self.screen)
