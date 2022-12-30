@@ -14,37 +14,37 @@ class Parameter:
 
     # Tile settings
     tile_size: int = 10
-    tile_alive_color: Color = BLACK
     tile_dead_color: Color = WHITE
+    tile_alive_color: Color = BLACK
 
     # Font settings
     font_size: int = 24
     font_name: str = "Arial"
-    font_color: Color = WHITE
+    font_color: Color = BLACK
 
     # Rules
-    rules = "1|2-3,0|3"
+    rules = "1:2-3,0:3"
 
     @staticmethod
     def save_to_file(filename: str) -> None:
         # Open the file and write the parameters
         with open(filename, "w") as f:
-            f.write(f"default_size: {str(Parameter.default_size)}\n")
-            f.write(f"bg_color: {str(Parameter.bg_color)}\n")
+            f.write(f"default_size= {str(Parameter.default_size)}\n")
+            f.write(f"bg_color= {str(Parameter.bg_color)}\n")
 
-            f.write(f"grid_rows: {Parameter.grid_rows}\n")
-            f.write(f"grid_cols: {Parameter.grid_cols}\n")
-            f.write(f"grid_color: {str(Parameter.grid_color)}\n")
+            f.write(f"grid_rows= {Parameter.grid_rows}\n")
+            f.write(f"grid_cols= {Parameter.grid_cols}\n")
+            f.write(f"grid_color= {str(Parameter.grid_color)}\n")
 
-            f.write(f"tile_size: {Parameter.tile_size}\n")
-            f.write(f"tile_dead_color: {str(Parameter.tile_dead_color)}\n")
-            f.write(f"tile_alive_color: {str(Parameter.tile_alive_color)}\n")
+            f.write(f"tile_size= {Parameter.tile_size}\n")
+            f.write(f"tile_dead_color= {str(Parameter.tile_dead_color)}\n")
+            f.write(f"tile_alive_color= {str(Parameter.tile_alive_color)}\n")
 
-            f.write(f"font_name: {Parameter.font_name}\n")
-            f.write(f"font_size: {Parameter.font_size}\n")
-            f.write(f"font_color: {str(Parameter.font_color)}\n")
+            f.write(f"font_size= {Parameter.font_size}\n")
+            f.write(f"font_name= {Parameter.font_name}\n")
+            f.write(f"font_color= {str(Parameter.font_color)}\n")
 
-            f.write(f"rules: {Parameter.rules}")
+            f.write(f"rules= {Parameter.rules}")
 
     @staticmethod
     def load_from_file(filename: str) -> None:
@@ -56,7 +56,7 @@ class Parameter:
         with open(filename, "r") as f:
             for line in f:
                 # Split the line into key and value
-                key, value = line.split(":")
+                key, value = line.split("=")
                 # Strip whitespace and convert the value to the appropriate type
                 key = key.strip()
 

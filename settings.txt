@@ -1,12 +1,12 @@
-default_size: 490, 490
-bg_color: 255, 255, 255
-grid_rows: 49
-grid_cols: 49
-grid_color: 100, 100, 100
-tile_size: 10
-tile_dead_color: 255, 255, 255
-tile_alive_color: 0, 0, 0
-font_name: Arial
-font_size: 24
-font_color: 255, 255, 255
-rules: 1|2-3,0|3
+default_size= 490, 490
+bg_color= 255, 255, 255
+grid_rows= 49
+grid_cols= 49
+grid_color= 100, 100, 100
+tile_size= 10
+tile_dead_color= 255, 255, 255
+tile_alive_color= 0, 0, 0
+font_size= 24
+font_name= Arial
+font_color= 0, 0, 0
+rules= 1:2-3,0:3

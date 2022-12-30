@@ -4,6 +4,7 @@ from game_of_life.menu import Menu
 from game_of_life.grid import Grid
 from utils.parameter import Parameter
 from game_controller.button import Button
+from game_controller.textfield import TextField
 from utils.constants import WHITE, MIN_SCREEN_HEIGHT, MIN_SCREEN_WIDTH, MAP_WIDTH, MAP_HEIGHT, TILE_SIZE
 
 
@@ -34,6 +35,8 @@ class GameOfLife:
         # Initialize custom grid
         self.cs_grid = Grid(width, height, tile_size)
 
+        self.textfield = TextField(self.screen, "Test :", 50, 100)
+
     def play(self) -> None:
         """
             Launch the game
@@ -43,6 +46,8 @@ class GameOfLife:
 
         # While the game is not over
         while not done:
+
+            self.screen.fill(Parameter.bg_color)
 
             if self.stage == Stage.INTRO:
                 self.__intro_stage()
@@ -56,6 +61,7 @@ class GameOfLife:
             # Listen for all events
             for event in pygame.event.get():
                 self.menu.handle_mouse_event()
+                self.textfield.handle_typing(event)
 
                 # Resize the screen game if the user resize the window
                 if event.type == pygame.VIDEORESIZE:
@@ -63,6 +69,7 @@ class GameOfLife:
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.stage = Stage.INTRO
+                    self.menu.current_stage = Stage.INTRO
 
                 # Quit the infinite loop when the user presses the close button
                 if event.type == pygame.QUIT:
@@ -86,7 +93,7 @@ class GameOfLife:
             screen_height -= (screen_height % self.tile_size) - self.tile_size
 
         self.screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
-        self.screen.fill(WHITE)
+        self.screen.fill(Parameter.bg_color)
 
     def __intro_stage(self) -> None:
         w = 200
@@ -111,4 +118,4 @@ class GameOfLife:
         self.cs_grid.draw_state(self.screen)
 
     def __settings_stage(self) -> None:
-        print("SETTINGS STAGE")
+        self.textfield.draw()
