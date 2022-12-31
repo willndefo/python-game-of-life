@@ -3,8 +3,8 @@ from utils.parameter import Parameter
 
 
 class TextField:
-    def __init__(self, screen: pygame.surface.Surface, label: str, pos_x: int, pos_y: int):
-        self.input: str = ""  # Content of the textfield
+    def __init__(self, screen: pygame.surface.Surface, label: str, pos_x: int, pos_y: int, default_input: str = ""):
+        self.input: str = default_input  # Content of the textfield
         self.label: str = label  # Label of the textfield
 
         # Initialize the textfield rect

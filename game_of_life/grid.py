@@ -1,13 +1,18 @@
 from utils.type import Color
 from game_of_life.tile import Tile
 from utils.constants import INIT_STATE
+from utils.parameter import Parameter
 from pygame.draw import line as draw_line
 from pygame.surface import Surface as pySurface
 from game_controller.rule_handler import RuleHandler
 
 
 class Grid:
-    def __init__(self, cols: int, rows: int, tile_size: int, customize: bool = False):
+    def __init__(self, customize: bool = False):
+        cols: int = Parameter.grid_cols
+        rows: int = Parameter.grid_rows
+        tile_size: int = Parameter.tile_size
+
         self.cols: int = cols
         self.rows: int = rows
         self.tile_size: int = tile_size

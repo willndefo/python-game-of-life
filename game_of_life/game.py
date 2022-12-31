@@ -16,7 +16,7 @@ class GameOfLife:
         self.clock = pygame.time.Clock()
 
         # Initialize stage manager
-        self.stage_manager = StageManager()
+        self.stage_manager = StageManager(self.screen)
 
     def play(self) -> None:
         """
@@ -35,7 +35,7 @@ class GameOfLife:
 
             # Listen for all events
             for event in pygame.event.get():
-                #  self.textfield.handle_typing(event)
+                self.stage_manager.handle_event(event)
 
                 # Resize the screen game if the user resize the window
                 if event.type == pygame.VIDEORESIZE:

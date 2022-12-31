@@ -1,8 +1,8 @@
 import pygame
 from utils.type import Color
 from pygame.draw import rect as draw_rect
+from utils.parameter import Parameter
 from pygame.surface import Surface as pySurface
-from utils.constants import TILE_ALIVE_COLOR, TILE_DEAD_COLOR
 
 
 class Tile:
@@ -18,7 +18,7 @@ class Tile:
             :return: nothing
         """
 
-        color: Color = TILE_ALIVE_COLOR if self.state == 1 else TILE_DEAD_COLOR
+        color: Color = Parameter.tile_alive_color if self.state == 1 else Parameter.tile_dead_color
         draw_rect(screen, color, self.rect)
 
     def toggle_state(self) -> None:
