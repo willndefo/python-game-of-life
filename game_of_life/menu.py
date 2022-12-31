@@ -6,13 +6,20 @@ from pygame.surface import Surface as pySurface
 class Menu:
     def __init__(self, buttons: list[Button]):
         self.buttons = buttons
+        self.previous_stage = Stage.INTRO
         self.current_stage = Stage.INTRO
 
     def handle_mouse_event(self) -> None:
+        """
+            Responsible to handle click on the menu
+            :return:
+        """
+
         for button in self.buttons:
             button.handle_mouse_event()
 
             if button.is_clicked:
+                self.previous_stage = self.current_stage
                 self.current_stage = Stage[button.label]
 
     def draw(self, screen: pySurface) -> None:
@@ -28,6 +35,7 @@ class Menu:
             :param h: height of the button
             :return: nothing
         """
+
         offset = -h * 2
         for button in self.buttons:
             button.set_button_rect(x, y + offset, w, h)

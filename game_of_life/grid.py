@@ -7,22 +7,31 @@ from game_controller.rule_handler import RuleHandler
 
 
 class Grid:
-    def __init__(self, cols: int, rows: int, tile_size: int):
+    def __init__(self, cols: int, rows: int, tile_size: int, customize: bool = False):
         self.cols: int = cols
         self.rows: int = rows
         self.tile_size: int = tile_size
 
         self.rule_handler = RuleHandler()
 
-        self.state = [[Tile(x, y, self.tile_size, INIT_STATE[y][x]) for x in range(cols)] for y in range(rows)]
+        self.customize = customize
 
-    def draw_state(self, screen: pySurface):
+        if customize:
+            self.state = [[Tile(x, y, self.tile_size, 0) for x in range(cols)] for y in range(rows)]
+        else:
+            self.state = [[Tile(x, y, self.tile_size, INIT_STATE[y][x]) for x in range(cols)] for y in range(rows)]
+
+    def draw_state(self, screen: pySurface) -> None:
         """
             Responsible to draw the current state
-            :return:
+            :return: nothing
         """
+
         for row in self.state:
             for tile in row:
+
+                if self.customize:
+                    tile.toggle_state()
                 tile.draw(screen)
 
         # Draw the grid
@@ -81,3 +90,6 @@ class Grid:
                     number += 1 if self.state[y + dy][x + dx].state == 1 else 0
 
         return number
+
+    def set_state(self, state: list[list[Tile]]) -> None:
+        self.state = state

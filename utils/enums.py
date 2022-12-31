@@ -3,6 +3,9 @@ from enum import Enum
 
 class Stage(Enum):
     INTRO = "INTRO"
-    RANDOM = "RANDOM"
+    PLAY = "PLAY"
     CUSTOM = "CUSTOM"
     SETTINGS = "SETTINGS"
+
+
+# Tile state

@@ -17,7 +17,7 @@ class TextField:
         # Define stroke rectangle
         self.stroke = 3  # Outline width
 
-        self.screen = screen
+        self.screen: pygame.surface.Surface = screen
         self.font = pygame.font.Font(None, Parameter.font_size)
         self.active: bool = False
 
@@ -26,16 +26,20 @@ class TextField:
         pygame.draw.rect(self.screen, Parameter.bg_color, self.rect_boundary)
 
         # Draw line stroke at the bottom
-        pygame.draw.line(self.screen, Parameter.font_color, (self.pos_x, self.pos_y + self.height), (self.pos_x + self.width, self.pos_y + self.height), self.stroke)
+        start = (self.pos_x, self.pos_y + self.height)
+        end = (self.pos_x + self.width, self.pos_y + self.height)
+        color = Parameter.grid_color if self.active else Parameter.font_color
+        pygame.draw.line(self.screen, color, start, end, self.stroke)
 
         # Render the text and draw it to the screen
         text_surface = self.font.render(self.input, True, Parameter.font_color)
         text_rect = text_surface.get_rect(midleft=self.rect_boundary.midleft)
         self.screen.blit(text_surface, text_rect)
 
-        label = self.font.render(self.label, True, Parameter.font_color)
-        text_rect = label.get_rect(centery=self.rect_boundary.centery)
-        self.screen.blit(label, text_rect)
+        # Render text label
+        text_surface = self.font.render(self.label, True, Parameter.font_color)
+        text_rect = text_surface.get_rect(centery=self.rect_boundary.centery)
+        self.screen.blit(text_surface, text_rect)
 
     def handle_typing(self, event: pygame.event.Event) -> None:
 

@@ -9,7 +9,7 @@ class Tile:
     def __init__(self, x: int, y: int, size: int, state: int):
         self.state: int = state
         self.rect = pygame.Rect(x * size, y * size, size, size)
-        self.click_flag: int = 0
+        self.click_flag: int = 0  # Control variable for handle click because of the game's loop
 
     def draw(self, screen: pySurface) -> None:
         """
@@ -18,11 +18,15 @@ class Tile:
             :return: nothing
         """
 
-        #self.handle_click()
         color: Color = TILE_ALIVE_COLOR if self.state == 1 else TILE_DEAD_COLOR
         draw_rect(screen, color, self.rect)
 
-    def handle_click(self) -> None:
+    def toggle_state(self) -> None:
+        """
+            Responsible to switch between the state value of state (0, 1) by click
+            :return: nothing
+        """
+
         mouse_pos = pygame.mouse.get_pos()
 
         if self.rect.collidepoint(mouse_pos):
